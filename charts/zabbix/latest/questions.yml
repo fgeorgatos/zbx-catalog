@@ -125,11 +125,12 @@ questions:
   - variable: db.persistence.storageClassName
     label: Default storageClassName
     description: "If undefined or null, uses the default StorageClassName. Defaults to null."
-    default: "zone1"
+    default: "ssd1-zone1"
     type: enum
     options:
-      - "zone1"
-      - "zone2"
+      - "ssd1-zone1"
+      - "ssd1-zone2"
+      - "ssd1-zone3"
 
 - variable: db.enabled
   label: Create Service
