@@ -23,7 +23,7 @@ db:
     size: 8Gi
     existingClaim:
     accessMode: ReadWriteOnce
-    storageClassName: zone1
+    storageClassName: ssd1-zone1
 
   # Custom PostgreSQL Server configuration files used to override default settings
   configuration:
