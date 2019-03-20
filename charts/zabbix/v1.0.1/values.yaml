@@ -1,0 +1,116 @@
+db:
+  enabled: true
+  name: zabbix-db
+  image:
+    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-db-tsdb
+    tag: latest
+    pullPolicy: Always
+
+  replicaCount: 1
+  service:
+    name: postgres
+    type: NodePort
+    port: 5432
+
+  resources:
+    requests:
+      memory: 2Gi
+    limits:
+      memory: 8Gi
+
+  persistence:
+    enabled: true
+    size: 8Gi
+    existingClaim:
+    accessMode: ReadWriteOnce
+    storageClassName: zone1
+
+  # Custom PostgreSQL Server configuration files used to override default settings
+  configuration:
+    global:
+    files:
+      pg_hba.conf: |-
+        # TYPE  DATABASE        USER            ADDRESS                 METHOD
+        local   all             all                                     trust
+        host    all             all             127.0.0.1/32            trust
+        host    all             all             ::1/128                 trust
+        host    all             all             0.0.0.0/0               md5
+
+  pgsql:
+    user: "zabbix"
+    pass: "zabbix"
+
+  env:
+    initdata: local
+    initadm:
+    raw: 3
+    trend: 24
+
+srv:
+  enabled: true
+  name: zabbix-srv
+  image:
+    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-server
+    tag: 4.0.3-json
+    pullPolicy: Always
+
+  replicaCount: 1
+  service:
+    name: zbx-trapper
+    type: NodePort
+    port: 10051
+
+  resources:
+    requests:
+      memory: 512Mi
+    limits:
+      memory: 2Gi
+
+  # Custom Zabbix Server configuration files used to override default settings
+  configuration:
+    global:
+      CacheSize: 3G
+    files:
+
+
+web:
+  enabled: true
+  name: zabbix-web
+  image:
+    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-web
+    tag: latest
+    pullPolicy: Always
+
+  replicaCount: 2
+  service:
+    name: http
+    type: ClusterIP
+    port: 80
+    ssl: false
+
+  resources:
+    requests:
+      memory: 256Mi
+    limits:
+      memory: 2Gi
+
+  ingress:
+    enabled: true
+    paths:
+      - "/"
+    hosts:
+      - xip.io
+    annotations:
+    tls:
+
+## Create a kube-state-metrics deployment
+## ref: https://github.com/kubernetes/charts/tree/master/stable/kube-state-metrics
+deployKubeStateMetrics: true
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
