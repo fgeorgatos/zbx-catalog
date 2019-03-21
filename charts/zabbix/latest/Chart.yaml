@@ -12,6 +12,6 @@ icon: https://assets.zabbix.com/img/logo/zabbix_logo_313x82.png
 sources:
   - https://github.com/syepes/zbx-helm
 maintainers:
-  - name: syepes
-    email: syepes@gmail.com
-    url: https://github.com/syepes
+  - name: jmanset
+    email: johann.manset@ubisoft.com
+    url: https://gitlab-ncsa.ubisoft.org/COPS/central-ops-monitoring/Rancher/zbx-catalog

@@ -1,150 +1,161 @@
 questions:
-#zabbix configurations
-- variable: db.env.initdata
-  label: Zabbix Auth Domain profile
-  description: "What Ubisoft domain should be used"
-  default: "local"
-  type: enum
-  options:
-    - "local"
-    - "org"
-    - "onbe"
-  group: "Zabbix Configuration"
-  show_subquestion_if: "db.env.initdata!=local"
-  subquestions:
-  - variable: db.env.initadm
-    label: Zabbix admin user
-    description: "The initial Zabbix super Admin"
-    default: ""
-    type: string
-    required: false
-
-- variable: db.env.raw
-  label: Zabbix RAW Item retention
-  description: "Number of months that the RAW Item values will be keeped"
-  default: "3"
-  type: int
-  min: 1
-  max: 12
-  group: "Zabbix Configuration"
-
-- variable: db.env.trend
-  label: Zabbix TREND Item retention
-  description: "Number of months that the TREND Item values will be keeped"
-  default: "24"
-  type: int
-  min: 1
-  max: 24
-  group: "Zabbix Configuration"
-
-#image configurations
-- variable: defaultImage
-  label: Use latest Ubisoft Zabbix Image Tags
-  description: "Use default Ubisoft Zabbix image or specify a custom one"
-  default: true
-  type: boolean
-  group: "Container Images"
-  show_subquestion_if: false
-  subquestions:
-  - variable: web.image.tag
-    label: Zabbix Web Image Tag
-    description: "Zabbix Web image Tag"
-    default: "latest"
-    type: string
-  - variable: srv.image.tag
-    label: Zabbix Server Image Tag
-    description: "Zabbix Server image Tag"
-    default: "latest"
-    type: string
-  - variable: db.image.tag
-    label: Zabbix DB Image Tag
-    description: "Zabbix DB image Tag"
-    default: "latest"
-    type: string
-
-#web configurations
-- variable: web.replicaCount
-  label: Number of Web Instances
-  description: "Enter your Web Instances"
-  default: 2
-  type: int
-  min: 1
-  max: 4
-  group: "Web Configuration"
-- variable: web.enabled
-  label: Create Service
-  description: "Create Web UI service endpoint"
-  default: true
-  type: boolean
-  group: "Web Configuration"
-  show_subquestion_if: true
-  subquestions:
-  - variable: web.service.type
-    label: Service Type
-    description: "Service type to create"
-    default: "ClusterIP"
+  #zabbix configurations
+  - variable: db.env.initdata
+    label: Zabbix Auth Domain profile
+    description: "What Ubisoft domain should be used"
+    default: "local"
     type: enum
     options:
-      - "ClusterIP"
-      - "LoadBalancer"
+      - "local"
+      - "org"
+      - "onbe"
+    group: "Zabbix Configuration"
+    show_subquestion_if: "db.env.initdata!=local"
+    subquestions:
+      - variable: db.env.initadm
+        label: Zabbix admin user
+        description: "The initial Zabbix super Admin"
+        default: ""
+        type: string
+        required: false
 
-#srv configurations
-- variable: srv.enabled
-  label: Create Service
-  description: "Create Server (Zabbix Trapper) service endpoint"
-  default: true
-  type: boolean
-  group: "Server Configuration"
-  show_subquestion_if: true
-  subquestions:
-  - variable: srv.service.type
-    label: Service Type
-    description: "Service type to create"
-    default: "NodePort"
+  - variable: db.env.raw
+    label: Zabbix RAW Item retention
+    description: "Number of months that the RAW Item values will be keeped"
+    default: "3"
+    type: int
+    min: 1
+    max: 12
+    group: "Zabbix Configuration"
+
+  - variable: db.env.trend
+    label: Zabbix TREND Item retention
+    description: "Number of months that the TREND Item values will be keeped"
+    default: "24"
+    type: int
+    min: 1
+    max: 24
+    group: "Zabbix Configuration"
+
+  - variable: db.env.zabbix.size
+    label: Zzabbix Size
+    description: "What size will be your zabbix"
+    default: "small"
     type: enum
     options:
-      - "ClusterIP"
-      - "NodePort"
+      - "small"
+      - "medium"
+      - "large"
+    group: "Zabbix Configuration"
 
-#db configurations
-- variable: db.persistence.enabled
-  label: DB Persistent Volume Enabled
-  description: "Enable DB persistence using PVC"
-  default: true
-  type: boolean
-  required: true
-  group: "DB Configuration"
-  show_subquestion_if: true
-  subquestions:
-  - variable: db.persistence.size
-    label: Volume Size
-    description: "Volume Size"
-    default: "8Gi"
-    type: string
+  #image configurations
+  - variable: defaultImage
+    label: Use latest Ubisoft Zabbix Image Tags
+    description: "Use default Ubisoft Zabbix image or specify a custom one"
+    default: true
+    type: boolean
+    group: "Container Images"
+    show_subquestion_if: false
+    subquestions:
+      - variable: web.image.tag
+        label: Zabbix Web Image Tag
+        description: "Zabbix Web image Tag"
+        default: "latest"
+        type: string
+      - variable: srv.image.tag
+        label: Zabbix Server Image Tag
+        description: "Zabbix Server image Tag"
+        default: "latest"
+        type: string
+      - variable: db.image.tag
+        label: Zabbix DB Image Tag
+        description: "Zabbix DB image Tag"
+        default: "latest"
+        type: string
+
+  #web configurations
+  - variable: web.replicaCount
+    label: Number of Web Instances
+    description: "Enter your Web Instances"
+    default: 2
+    type: int
+    min: 1
+    max: 4
+    group: "Web Configuration"
+  - variable: web.enabled
+    label: Create Service
+    description: "Create Web UI service endpoint"
+    default: true
+    type: boolean
+    group: "Web Configuration"
+    show_subquestion_if: true
+    subquestions:
+      - variable: web.service.type
+        label: Service Type
+        description: "Service type to create"
+        default: "ClusterIP"
+        type: enum
+        options:
+          - "ClusterIP"
+          - "LoadBalancer"
+
+  #srv configurations
+  - variable: srv.enabled
+    label: Create Service
+    description: "Create Server (Zabbix Trapper) service endpoint"
+    default: true
+    type: boolean
+    group: "Server Configuration"
+    show_subquestion_if: true
+    subquestions:
+      - variable: srv.service.type
+        label: Service Type
+        description: "Service type to create"
+        default: "NodePort"
+        type: enum
+        options:
+          - "ClusterIP"
+          - "NodePort"
+
+  #db configurations
+  - variable: db.persistence.enabled
+    label: DB Persistent Volume Enabled
+    description: "Enable DB persistence using PVC"
+    default: true
+    type: boolean
     required: true
-  - variable: db.persistence.storageClassName
-    label: Default storageClassName
-    description: "If undefined or null, uses the default StorageClassName. Defaults to null."
-    default: "ssd1-zone1"
-    type: enum
-    options:
-      - "ssd1-zone1"
-      - "ssd1-zone2"
-      - "ssd1-zone3"
+    group: "DB Configuration"
+    show_subquestion_if: true
+    subquestions:
+      - variable: db.persistence.size
+        label: Volume Size
+        description: "Volume Size"
+        default: "8Gi"
+        type: string
+        required: true
+      - variable: db.persistence.storageClassName
+        label: Default storageClassName
+        description: "If undefined or null, uses the default StorageClassName. Defaults to null."
+        default: "ssd1-zone1"
+        type: enum
+        options:
+          - "ssd1-zone1"
+          - "ssd1-zone2"
+          - "ssd1-zone3"
 
-- variable: db.enabled
-  label: Create Service
-  description: "Create DB service endpoint"
-  default: false
-  type: boolean
-  group: "DB Configuration"
-  show_subquestion_if: true
-  subquestions:
-  - variable: db.service.type
-    label: Service Type
-    description: "Service type to create"
-    default: "ClusterIP"
-    type: enum
-    options:
-      - "ClusterIP"
-      - "NodePort"
+  - variable: db.enabled
+    label: Create Service
+    description: "Create DB service endpoint"
+    default: false
+    type: boolean
+    group: "DB Configuration"
+    show_subquestion_if: true
+    subquestions:
+      - variable: db.service.type
+        label: Service Type
+        description: "Service type to create"
+        default: "ClusterIP"
+        type: enum
+        options:
+          - "ClusterIP"
+          - "NodePort"
