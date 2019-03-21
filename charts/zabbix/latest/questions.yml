@@ -49,16 +49,16 @@ questions:
     max: 24
     group: "Zabbix Configuration"
 
-  #image configurations
-  - variable: defaultImage
-    label: Use latest Ubisoft Zabbix Image Tags
-    description: "Use default Ubisoft Zabbix image or specify a custom one"
-    default: true
+  #Advance settingd
+  - variable: adavnceSettings
+    label: See the advance settings
+    description: "See the advance seetings need to be use with precaution"
+    default: false
     type: boolean
     group: "Container Images"
-    show_subquestion_if: false
+    show_subquestion_if: true
     subquestions:
-      - variable: web.image.tag
+     - variable: web.image.tag
         label: Zabbix Web Image Tag
         description: "Zabbix Web image Tag"
         default: "latest"
@@ -73,6 +73,7 @@ questions:
         description: "Zabbix DB image Tag"
         default: "latest"
         type: string
+
 
   #web configurations
   - variable: web.replicaCount
