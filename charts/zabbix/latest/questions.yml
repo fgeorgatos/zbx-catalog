@@ -55,10 +55,18 @@ questions:
     description: "See the advance seetings need to be use with precaution"
     default: false
     type: boolean
+    group: "Advance settings"
+
+  #image configurations
+  - variable: defaultImage
+    label: Use latest Ubisoft Zabbix Image Tags
+    description: "Use default Ubisoft Zabbix image or specify a custom one"
+    default: true
+    type: boolean
     group: "Container Images"
-    show_subquestion_if: true
+    show_subquestion_if: false
     subquestions:
-     - variable: web.image.tag
+      - variable: web.image.tag
         label: Zabbix Web Image Tag
         description: "Zabbix Web image Tag"
         default: "latest"
@@ -73,13 +81,24 @@ questions:
         description: "Zabbix DB image Tag"
         default: "latest"
         type: string
-      - variable: web.replicaCount
-        label: Number of Web Instances
-        description: "Enter your Web Instances"
-        default: 2
-        type: int
-        min: 1
-        max: 4 
+
+  #web configurations
+  - variable: web.replicaCount
+    label: Number of Web Instances
+    description: "Enter your Web Instances"
+    default: 2
+    type: int
+    min: 1
+    max: 4
+    group: "Web Configuration"
+  - variable: web.enabled
+    label: Create Service
+    description: "Create Web UI service endpoint"
+    default: true
+    type: boolean
+    group: "Web Configuration"
+    show_subquestion_if: true
+    subquestions:
       - variable: web.service.type
         label: Service Type
         description: "Service type to create"
@@ -87,22 +106,7 @@ questions:
         type: enum
         options:
           - "ClusterIP"
-          - "LoadBalancer" 
-      - variable: db.persistence.size
-        label: Volume Size
-        description: "Volume Size"
-        default: "8Gi"
-        type: string
-        required: true
-      - variable: db.persistence.storageClassName
-        label: Default storageClassName
-        description: "If undefined or null, uses the default StorageClassName. Defaults to null."
-        default: "ssd1-zone1"
-        type: enum
-        options:
-          - "ssd1-zone1"
-          - "ssd1-zone2"
-          - "ssd1-zone3"     
+          - "LoadBalancer"
 
   #srv configurations
   - variable: srv.enabled
