@@ -1,5 +1,17 @@
 questions:
   #zabbix configurations
+
+  - variable: db.env.zabbix.size
+    label: Zabbix Size
+    description: "What size will be your zabbix"
+    default: "small"
+    type: enum
+    options:
+      - "small"
+      - "medium"
+      - "large"
+    group: "Zabbix Configuration"
+
   - variable: db.env.initdata
     label: Zabbix Auth Domain profile
     description: "What Ubisoft domain should be used"
@@ -35,17 +47,6 @@ questions:
     type: int
     min: 1
     max: 24
-    group: "Zabbix Configuration"
-
-  - variable: db.env.zabbix.size
-    label: Zzabbix Size
-    description: "What size will be your zabbix"
-    default: "small"
-    type: enum
-    options:
-      - "small"
-      - "medium"
-      - "large"
     group: "Zabbix Configuration"
 
   #image configurations
