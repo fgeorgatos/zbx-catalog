@@ -25,6 +25,27 @@ db:
     accessMode: ReadWriteOnce
     storageClassName: ssd1-zone1
 
+mydb:
+  enabled: true
+  name: zabbix-db2
+  image:
+    repository: gitlab-emea.ubisoft.org:4567/monitoring/zbx/zbx-db-tsdb
+    tag: latest
+    pullPolicy: Always
+
+  replicaCount: 1
+  service:
+    name: postgres
+    type: NodePort
+    port: 5432
+    
+  persistence:
+    enabled: true
+    size: 18Gi
+    existingClaim:
+    accessMode: ReadWriteOnce
+    storageClassName: default
+
   # Custom PostgreSQL Server configuration files used to override default settings
   configuration:
     global:
