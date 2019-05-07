@@ -152,6 +152,33 @@ questions:
           - "ssd1-zone2"
           - "ssd1-zone3"
 
+  #db configurations
+  - variable: mydb.persistence.enabled
+    label: MyDB Persistent Volume Enabled
+    description: "Enable MyDB persistence using PVC"
+    default: true
+    type: boolean
+    required: true
+    group: "MyDB Configuration"
+    show_subquestion_if: true
+    subquestions:
+      - variable: mydb.persistence.size
+        label: Volume Size
+        description: "Volume Size"
+        default: "18Gi"
+        type: string
+        required: true
+      - variable: mydb.persistence.storageClassName
+        label: Default storageClassName
+        description: "If undefined or null, uses the default StorageClassName. Defaults to null."
+        default: "default"
+        type: enum
+        options:
+          - "default"
+          - "ssd1-zone1"
+          - "ssd1-zone2"
+          - "ssd1-zone3"
+
   - variable: db.enabled
     label: Create Service
     description: "Create DB service endpoint"
